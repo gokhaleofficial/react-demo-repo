@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Odd, Even } from "./ConditionalRendering";
 
 import "./styles.css";
-
 export default function App() {
   const names = ["Sachin", "Rahul", "Kumble"];
 
@@ -14,14 +14,89 @@ export default function App() {
 
   return (
     <div className="App">
-      <MyInputClassComponent />
+      Hello World
+      {/* <MyInputClassComponent /> */}
       {/* <ShowEmployeeDetails data={empObj} /> */}
       {/* <Age age={11 + 11} name="Sachin" />
       <hr />
       <Age /> */}
       {/* <ShowNames names={names} /> */}
+      <hr /> <br />
+      <ButtonTest />
     </div>
   );
+}
+
+class ButtonTest extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loggedIn: true,
+      response: {
+        status: null,
+        message: null
+      }
+    };
+    console.log("INside Constr");
+  }
+
+  handleClick = () => {
+    this.setState({
+      loggedIn: !this.state.loggedIn
+    });
+  };
+
+  componentDidMount() {
+    // This is where I can run side effects..
+    // Ex : API Calls.
+
+    const URL = "https://dummy.restapiexample.com/api/v1/employee/2";
+    fetch(URL)
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        console.log(data);
+        this.setState({
+          response: data
+        });
+      });
+
+    console.log("Inside Component Did Mount");
+  }
+
+  // componentWillUnmount() {
+  //   console.log("Inside Component Will Unmount");
+  // }
+
+  componentDidUpdate() {
+    console.log("Inside Component Did Update");
+  }
+
+  render() {
+    console.log("Inside Render");
+    if (!this.state.loggedIn) {
+      return (
+        <div>
+          You Have logged out
+          <button onClick={this.handleClick}>Log In Again</button>
+        </div>
+      );
+    }
+
+    return (
+      <div>
+        {this.state.loggedIn}
+        <br />
+        {this.state.response.status}
+        <br />
+        {this.state.response.message}
+        <br />
+        Your Home Page Here..
+        <button onClick={this.handleClick}>Log Out</button>
+      </div>
+    );
+  }
 }
 
 // Class Component
@@ -31,8 +106,10 @@ class MyInputClassComponent extends React.Component {
     super(props);
     this.state = {
       textBoxValue: "Typing Here..",
-      counter: 1000
+      counter: 0,
+      ShowComponentAsStateVariabe: null
     };
+    this.ShowComponent = null;
   }
 
   handleInputChange = e => {
@@ -44,17 +121,40 @@ class MyInputClassComponent extends React.Component {
 
   increment = () => {
     this.setState({
-      counter: this.state.counter - 1
+      counter: this.state.counter + 1
+      // ShowComponentAsStateVariabe: <Odd />
     });
   };
 
   render() {
+    // JS Land - Begins
+
+    // Gonna point to another REact COmp.
+    // console.log(this.state.counter);
+
+    if (this.state.counter % 2 === 0) {
+      this.ShowComponent = <Even />;
+    } else {
+      this.ShowComponent = <Odd />;
+    }
+
+    // JS Land - Ends
     return (
       <div>
         <input
           onChange={this.handleInputChange}
           value={this.state.textBoxValue}
         />
+        <hr />
+        {this.state.counter}
+        {/* Ternary Operator */}
+        {/* {this.state.counter % 2 === 0 ? <Even /> : <Odd />} */}
+        <hr />
+        Second Way :{/* Handle Conditions before REturn  */}
+        {this.ShowComponent}
+        <hr />
+        {/* POinting a Component from a state
+        {this.state.ShowComponentAsStateVariabe} */}
         <hr />
         <button onClick={this.increment}>{this.state.counter}</button>
       </div>
@@ -217,3 +317,27 @@ function ReturnHeader(id) {
 //       Pwd : <MyInputComponent type="password" />
 //       <MyComponent name="Submit" />
 //       <MyComponent name="Reset" />
+
+// class name extends React.Component {
+
+//   constructor(){
+//     // Vars
+//   }
+
+//   methods(){
+
+//   }
+
+//   // sadaldskjd
+
+//   method1(){
+// ///
+
+//   }
+
+//   method2(){
+// ///
+
+//   }
+
+// }
