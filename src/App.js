@@ -341,3 +341,16 @@ function ReturnHeader(id) {
 //   }
 
 // }
+
+// Introduction to React
+// Props
+// Functional Components
+// Class Components
+// State
+// - Props Vs State ??
+// - Life cycle Methods
+// - Conditional Rendering
+// - 	Hide & Show
+// - 	Ternary
+// -	Multiple returns
+// - How to make an API Call
