@@ -50,7 +50,8 @@ class ButtonTest extends React.Component {
     // This is where I can run side effects..
     // Ex : API Calls.
 
-    const URL = "https://dummy.restapiexample.com/api/v1/employee/2";
+    const URL = "https://jsonplaceholder.typicode.com/todos/1";
+    // const URL = "https://dummy.restapiexample.com/api/v1/employee/2";
     fetch(URL)
       .then(response => {
         return response.json();
